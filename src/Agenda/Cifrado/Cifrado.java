@@ -1,8 +1,8 @@
-package Cifrado;
+package Agenda.Cifrado;
 
 /**
  ************************
- * Clase : Cifrado
+ * Clase : Agenda.Cifrado
  * Autor : Alejandro Gálvez Madueño
  * Fecha : 05/2024
  * Version : 0.0

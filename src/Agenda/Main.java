@@ -1,11 +1,8 @@
 package Agenda;
 
-import Agenda.Menu.Menu;
 import Agenda.Menu.MenuCifrado;
 import Agenda.Menu.MenuPrincipal;
-import Cifrado.Cifrado;
-
-import java.util.Scanner;
+import Agenda.Cifrado.Cifrado;
 
 public class Main {
     public static void main(String[] args) {
@@ -34,6 +31,8 @@ public class Main {
                     Cifrado cifrado = new Cifrado(menuCifrado.getTipoCifrado());
                     System.out.println(cifrado.getTipoCifrado());
                     break;
+                case 2:
+
 
                 default:
                     System.err.println("---------------------\n  Opción incorrecta \n---------------------");

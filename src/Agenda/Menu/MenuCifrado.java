@@ -6,12 +6,12 @@ import java.util.Scanner;
 
 /**
  ************************
- * Clase : Menu Cifrado
+ * Clase : Menu Agenda.Cifrado
  * Autor : Alejandro Gálvez Madueño
  * Fecha : 05/2024
  * Version : 0.0
  * Testeo : No
- * Descripción : Clase que muestra el menú de los tipos de Cifrado y pide la opción que introduce el usuario
+ * Descripción : Clase que muestra el menú de los tipos de Agenda.Cifrado y pide la opción que introduce el usuario
  ************************
  * */
 public class MenuCifrado extends Menu {
@@ -29,7 +29,7 @@ public class MenuCifrado extends Menu {
 
         int o = -1;
 
-        System.out.println("Tipo de Cifrado : ");
+        System.out.println("Tipo de Agenda.Cifrado : ");
         o = sc.nextInt();
 
         //Si la opción es incorrecta, imprime un error
@@ -48,8 +48,8 @@ public class MenuCifrado extends Menu {
     public void mostrarMenu(){
 
         System.out.println(
-                "1. Cifrado XOR\n" +
-                "2. Cifrado Cesar\n");
+                "1. Agenda.Cifrado XOR\n" +
+                "2. Agenda.Cifrado Cesar\n");
     }
 
 

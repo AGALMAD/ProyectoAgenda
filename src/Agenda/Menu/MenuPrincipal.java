@@ -32,10 +32,7 @@ public class MenuPrincipal extends Menu{
         System.out.println("Opcion : ");
         o = sc.nextInt();
 
-        if ( o < 0 || o > 8)
-            System.err.println("---------------------\n  Opción incorrecta \n---------------------");
-        else
-            opcion = o;
+        opcion = o;
     }
 
     /** Método mostrarMenu : muestra el menú con las opciones que puede elegir el usuario*/
