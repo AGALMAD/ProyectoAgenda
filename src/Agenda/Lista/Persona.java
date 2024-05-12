@@ -1,27 +1,48 @@
 package Agenda.Lista;
+
 /**
  ************************
- * Clase : Agenda.Lista.Persona
+ * Clase : Agenda.Lista.Contacto
  * Autor : Yon Cortes Bernal
  * Fecha : 05/2024
  * Version : 0.0
  * Testeo : No
  * Descripción : Clase Persona
  ************************
- * */
+ */
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Persona {
-	String nombre;
-	String apellidos;
-	String fnac;
-	
-	
-	public Persona(String nombre, String apellidos, String fnac) {
-		
-		this.nombre = nombre;
-		this.apellidos = apellidos;
-		this.fnac = fnac;
-	}
+    protected String nombre;
+    protected String apellidos;
+    protected Date fnac;
+    
+    /* Constructor pasándole nombre, apellidos y fecha de nacimiento */
+    public Persona(String nombre, String apellidos, String fecha) {
+        this.nombre = nombre; 
+        this.apellidos = apellidos; 
+        comprobarFecha(fecha);
+    }
+    
+    
+    public void comprobarFecha(String fecha) {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            Date fechaConvertida = formato.parse(fecha);
+            this.fnac = fechaConvertida;
+        } catch (ParseException e) {
+            System.out.println("Fecha inválida, asignamos una por defecto");
+            try {
+            	this.fnac = formato.parse("01/01/2024");
+            }catch (ParseException ex) {
+            	 e.printStackTrace();
+            }
+           
+        }
+    }
 
 
 	public String getNombre() {
@@ -44,16 +65,16 @@ public class Persona {
 	}
 
 
-	public String getFnac() {
+	public Date getFnac() {
 		return fnac;
 	}
 
 
-	public void setFnac(String fnac) {
+	public void setFnac(Date fnac) {
 		this.fnac = fnac;
 	}
-	
-	
-	
-	
+    
+    
 }
+
+
