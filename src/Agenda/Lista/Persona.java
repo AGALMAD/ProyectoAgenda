@@ -1,4 +1,14 @@
 package Agenda.Lista;
+/**
+ ************************
+ * Clase : Agenda.Lista.Persona
+ * Autor : Yon Cortes Bernal
+ * Fecha : 05/2024
+ * Version : 0.0
+ * Testeo : No
+ * Descripción : Clase Persona
+ ************************
+ * */
 
 public class Persona {
 	String nombre;
