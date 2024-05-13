@@ -18,9 +18,14 @@ import java.util.Scanner;
 
 public class Lista {
 
-    /**
-     * Atributo */
+    /*********************** Atributos ***********************/
+
+    /** Atributo listaContactos
+     * Almacena la lista de todos los contactos
+     */
     private ArrayList<Contacto> listaContactos;
+
+    /*********************** Constructores ***********************/
 
     /** Constructor por defecto de la lista, crea la lista y la inicializa todo a null */
     public Lista(){
@@ -29,91 +34,8 @@ public class Lista {
 
     }
 
-    //Constante que almacena el número de contactos que tiene la agenda
-    private final int numeroContactos = 25;
-    private final Scanner sc = new Scanner(System.in);
 
-
-    /**
-     * Método : pedirDatos
-     * Pide todos los datos del contacto menos el apodo al usuario y retorna el contacto,
-     * se crea para poder utilizarlo en insertar un nuevo contacto y en modificar contacto
-     * @return
-     */
-    public Contacto pedirDatos(){
-
-        //Pide el nombre
-        System.out.println("Nombre : ");
-        String nombre = sc.nextLine();
-
-        //Pide los apellidos
-        System.out.println("Apellidos");
-        String apellidos = sc.nextLine();
-
-        //Pide la fecha de nacimiento como enteros y crea un objeto tipo DATE
-        System.out.println("Inserta la fecha de nacimiento");
-
-        int anio = 2000 ,dia = 1,mes = 1;
-        Date fnac;
-
-        try {
-            System.out.println("\tAño");
-            anio = sc.nextInt();
-            System.out.println("\tMes");
-            mes = sc.nextInt();
-            System.out.println("\tdia");
-            dia = sc.nextInt();
-
-            if (mes < 1 || mes > 12)
-                throw new ArithmeticException("ERROR | mes incorrecto");
-            if (dia < 1 || dia > 31)
-                throw new ArithmeticException("ERROR | dia incorrecto");
-            if (anio < 0)
-                throw new ArithmeticException("ERROR | año incorrecto");
-
-            fnac = new Date(anio, mes, dia);
-
-        }
-        catch (Exception e){
-
-            // Si ha ocurrido algún fallo en la inserción de la fecha, introduce una fecha por defecto
-            System.out.println(e.toString());
-            fnac = new Date(2000,1,1);
-
-        }
-
-        //Pide el número
-        System.out.println("Número de telefono");
-        int num = sc.nextInt();
-
-        //Limpia el buffer
-        sc.nextLine();
-
-        //Pide el mail
-        System.out.println("Mail");
-        String mail = sc.nextLine();
-
-        //Retorna el contacto con todos los datos menos el apodo
-        return new Contacto(nombre,apellidos,fnac,num,mail);
-    }
-
-
-
-    /**
-     * nuevoContacto
-     * Metodo que se utiliza para pedir un nuevo contacto, pide el apodo y llama a pedirDatos para pedir los datos restantes
-     * inserta el nuevo contacto en la lista
-     */
-    public void nuevoContacto( ){
-
-        System.out.println("Apodo que le vas a dar al  contacto");
-        String apodo = sc.nextLine();
-
-        Contacto nuevoContacto = pedirDatos();
-        nuevoContacto.setApodo(apodo);
-
-        insertarContacto(nuevoContacto);
-    }
+    /*********************** MÉTODOS ***********************/
 
     /**
      * insertarContacto
@@ -127,13 +49,27 @@ public class Lista {
     }
 
 
+    public boolean editarContacto(Contacto contactoEditado, String apodo){
+
+        //Si el apodo no existe, no sigue con el programa
+        if (!existeApodo(apodo))
+            return false;
+
+
+        int pos = posicionContacto(apodo);
+
+        listaContactos.set(pos,contactoEditado);
+        return true;
+
+    }
+
 
     /**
      * Método que comprueba si el contacto existe
      * @param apodo
      * @return true si existe, false si no existe
      */
-    private boolean existeApodo( String apodo){
+    public boolean existeApodo( String apodo){
         for (Contacto c : listaContactos){
             if (c.getApodo().equals(apodo))
                 return true;
@@ -158,74 +94,59 @@ public class Lista {
     /**
      * Método editarContacto
      * Pide el apodo y pide los nuevos datos de ese contacto
-     * @param contactos
+     * @param apodo
+     * @return 1 si el contacto no existe | 0 si se ha podido editar el contacto
      */
-    public void editarContacto(Contacto[] contactos) {
-        System.out.println("Ingrese el criterio de búsqueda (nombre, apellido):");
-        String criterio = sc.nextLine();
-        System.out.println("Ingrese el valor del criterio de búsqueda:");
-        String valor = sc.nextLine();
+    public int editarContacto( String apodo) {
 
-        Contacto contactoEncontrado = buscarContacto(criterio, valor, contactos);
-        if (contactoEncontrado != null) {
-            System.out.println("Editar contacto:");
-            System.out.println("Datos actuales del contacto:");
-            System.out.println(contactoEncontrado.toString());
-            contactoEncontrado.pedirDatos(); // Edita los datos del contacto encontrado
-            System.out.println("¡Contacto actualizado correctamente!");
-        } else {
-            System.out.println("No se encontró ningún contacto con el criterio proporcionado.");
+        //Si el contacto no existe, imprime un mensaje por pantalla
+        if (!existeApodo(apodo)){
+            return 1;
         }
+
+
+
+
+        return 0;
     }
 
 
     /**
-     *
-     * @param contactos
+     * consultarContacto
+     * Si existe el contacto, lo imprime por pantalla, si no, imprime que ese contacto no existe
+     * @param apodo
      */
-    public void mostrarContacto(Contacto[] contactos) {
+    public boolean consultarContacto(String apodo) {
 
-        System.out.println("Ingrese el criterio de búsqueda (nombre, apellido):");
-        String criterio = sc.nextLine();
-        System.out.println("Ingrese el valor del criterio de búsqueda:");
-        String valor = sc.nextLine();
-        Contacto contactoEncontrado = buscarContacto(criterio, valor, contactos);
-        if (contactoEncontrado != null) {
-
-            System.out.println("Datos actuales del contacto:");
-            System.out.println(contactoEncontrado.toString());
-        } else {
-            System.out.println("No se encontró ningún contacto con el criterio proporcionado.");
+        if (existeApodo(apodo)) {
+            System.out.println(listaContactos.get(posicionContacto(apodo)).toString());
+            return true;
         }
+
+        return false;
     }
 
 
     /**
-     *
-     * @param criterio
-     * @param valor
-     * @param contactos
-     * @return
+     * posicionContacto
+     * Busca el apodo del contacto y si lo encuentra, devuelve la posición de este
+     * @param apodo
+     * @return posicion
      */
 
-    public Contacto buscarContacto(String criterio, String valor,Contacto[] contactos) {
+    public int posicionContacto(String apodo) {
 
-        for (Contacto contacto : contactos) {
-            switch (criterio.toLowerCase()) {
-                case "nombre":
-                    if (contacto.getNombre().equalsIgnoreCase(valor)) {
-                        return contacto;
-                    }
-                    break;
-                case "apellido":
-                    if (contacto.getApellidos().equalsIgnoreCase(valor)) {
-                        return contacto;
-                    }
-                    break;
+        //Recorre la lista en busca de la posicion del contacto
+        for (int i = 0; i < listaContactos.size(); i++) {
 
-            }
+            //Si encuentra el apodo, retorna la posición de este
+            if (listaContactos.get(i).getApodo().equals(apodo))
+                return i;
+
         }
-        return null;
+
+
+        return -1;
     }
 
 
