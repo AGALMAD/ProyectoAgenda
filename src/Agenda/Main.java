@@ -45,36 +45,102 @@ public class Main {
                     Cifrado cifrado = new Cifrado(menuCifrado.getTipoCifrado());
                     System.out.println(cifrado.getTipoCifrado());
                     break;
+                    
+                    // Caso de insertar nuevo contacto
                 case 2: { //Si se ponene {} , es un ámbito diferente y no sale error al crear variables con el mismo nombre
                     //Pide el apodo que se le va a dar al nuevo contacto
+                	
                     System.out.println("Apodo que le vas a dar al nuevo contacto");
                     String apodo = sc.nextLine();
+                    
                     //Pide los datos restantes en el contacto
                     Contacto nuevoContacto = datos.pedirDatos();
                     nuevoContacto.setApodo(apodo);
-
+                    
+                    //Inserta el contacto
                     listaContactos.insertarContacto(nuevoContacto);
-
+                    System.out.println("Contacto agregado correctamente");
                     break;
                 }
+                	//Caso de editar contacto
                 case 3: {
-                    //Pide el apodo que se le va a dar al nuevo contacto
-                    System.out.println("Apodo que le vas a dar al nuevo contacto");
+                    //Busca por el apodo el contacto requerido
+                    System.out.println("Apodo del contacto a editar: ");
                     String apodo = sc.nextLine();
 
                     if (!listaContactos.existeApodo(apodo))
-                        System.err.println("ERROR | el contacto no existe");
+                        System.err.println("Contacto no encontrado, imposible editar.");
                     else {
                         //Pide los datos restantes en el contacto
                         Contacto contactoEditado = datos.pedirDatos();
                         contactoEditado.setApodo(apodo);
-
                         listaContactos.editarContacto(contactoEditado, apodo);
+                        System.err.println("Contacto editado correctamente");
+                        //Mostramos los datos del contacto editado
+                        contactoEditado.toString();
                     }
-
 
                     break;
                 }
+                
+                //muestra los datos del contacto buscado por el apodo
+                
+                case 4:{
+                	 // Pedimos el apodo
+                    System.out.println("Apodo del contacto a buscar: ");
+                    String apodo = sc.nextLine();
+                    
+                    //utilizo un buscar contacto que devuelva el contacto y lo introduce en contactoBuscado(metodo en clase lista)
+                    Contacto contactoBuscado = listaContactos.buscaContacto(apodo);
+                    //si es contacto es distinto de null lo ha encontrado
+                    if (contactoBuscado != null) {
+                        // Mostrar los datos del contacto
+                        System.out.println(contactoBuscado.toString());
+                    } else {
+                        System.err.println("Contacto no encontrado.");
+                    }
+                    break;
+                	
+                }
+                
+                //eliminar un contacto de la lista    
+                case 5: {
+                    // Pedir al usuario que ingrese el apodo del contacto a eliminar
+                    System.out.println("Apodo del contacto a eliminar: ");
+                    String apodo = sc.nextLine();
+                    
+                    //utilizo un buscar contacto que devuelva el contacto y lo introduce en contactoBuscado(metodo en clase lista)
+                    Contacto contactoBuscado = listaContactos.buscaContacto(apodo);
+                    //si es contacto es distinto de null lo ha encontrado
+                    if (contactoBuscado != null) {
+                        // Eliminamos el contacto
+                        listaContactos.eliminaContacto(contactoBuscado);
+                    } else {
+                        System.err.println("Contacto no encontrado.");
+                    }
+                    break;
+                }
+                
+                //Obtiene el numero de contactos de la lista
+                case 6:{
+                	int contador = listaContactos.numeroContactos();
+                	
+                	if(contador == 0) {
+                		System.out.println("Esta agenda esta vacía.");
+                	}else {
+                		System.out.println("Numero de contactos: " + contador);
+                	}
+                	break;
+                }
+                
+                //Muestra todos los contactos de la lista
+                case 7:{
+                	for(int i=0; i< listaContactos.numeroContactos();i++) {
+                		System.out.println(listaContactos.get(i).toString());
+                	}
+                	break;
+                }
+                
                 default:
                     System.err.println("---------------------\n  Opción incorrecta \n---------------------");
                     break;
