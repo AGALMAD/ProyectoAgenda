@@ -28,7 +28,6 @@ public class Contacto extends Persona implements Serializable{ /*Hay que impleme
     private int telefono;
     private String email;
 
-
     /*** Constructores ***/
     public Contacto(String nombre, String apellidos, Date fecha, int telefono, String email, String apodo) {
         super(nombre, apellidos, fecha);
