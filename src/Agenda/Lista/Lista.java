@@ -104,9 +104,6 @@ public class Lista {
             return 1;
         }
 
-
-
-
         return 0;
     }
 
@@ -134,21 +131,47 @@ public class Lista {
      * @return posicion
      */
 
-    public int posicionContacto(String apodo) {
-
-        //Recorre la lista en busca de la posicion del contacto
-        for (int i = 0; i < listaContactos.size(); i++) {
-
-            //Si encuentra el apodo, retorna la posición de este
-            if (listaContactos.get(i).getApodo().equals(apodo))
-                return i;
-
+    public boolean eliminarContacto(String apodo) {
+        int posicion = posicionContacto(apodo); // Obtiene la posición del contacto con el apodo que le pasamos
+        if (posicion != -1) {
+            listaContactos.remove(posicion); // Elimina el contacto 
+            return true; // Indica que el contacto fue eliminado con éxito, el mensaje lo damos en el main
         }
-
-
-        return -1;
+        return false; // En caso de no haberlo encontrado
     }
 
+    private int posicionContacto(String apodo) {
+        // Recorremos la lista en busca de un apodo que sea igual que el String pasado
+        for (int i = 0; i < listaContactos.size(); i++) {
+            // Si encuentra el apodo, devuelve la posición de este
+            if (listaContactos.get(i).getApodo().equals(apodo))
+                return i;
+        }
+        return -1; // Devueve -1 si no se encuentra el apodo en nuestra lista
+    }
+    
+    public int numeroContactos() {
+    	return listaContactos.size();
+    }
 
+    	
+    //me devuelve la i sin pedir apodo
 
+    public Contacto get(int i) {
+        if (i >= 0 && i < listaContactos.size()) {
+            return listaContactos.get(i);
+        } else {
+            throw new IndexOutOfBoundsException("Índice fuera de rango.");
+        }
+    }
+    
+    //METODO que devuelve un contacto por el apodo pasado   
+    public Contacto buscaContacto(String apodo) {
+        for (Contacto contacto : listaContactos) {
+            if (contacto.getApodo().equals(apodo)) {
+                return contacto;
+            }
+        }
+        return null;
+    }
 }
