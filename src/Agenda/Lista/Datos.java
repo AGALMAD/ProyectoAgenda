@@ -56,8 +56,11 @@ public class Datos {
         }
 
         //Pide el número
-        System.out.println("Número de telefono");
-        int num = sc.nextInt();
+        do{
+            System.out.println("Número de telefono");
+            int num = sc.nextInt();
+        }while(num.length()!=9);
+        
 
         //Limpia el buffer
         sc.nextLine();
@@ -72,3 +75,4 @@ public class Datos {
 
 
 }
+
