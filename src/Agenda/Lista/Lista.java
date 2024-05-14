@@ -1,5 +1,8 @@
 package Agenda.Lista;
 
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Date;
@@ -71,7 +74,7 @@ public class Lista {
      */
     public boolean existeApodo( String apodo){
         for (Contacto c : listaContactos){
-            if (c.getApodo().equals(apodo))
+            if (c.getApodo().equalsIgnoreCase(apodo))
                 return true;
         }
 
@@ -90,6 +93,37 @@ public class Lista {
         }
     }
 
+    /**
+     * Método listarFicheroTexto
+     * Introduce todos los contactos dentro del fichero de texto
+     * @param fichero
+     */
+    public void listarFicheroTexto(PrintWriter fichero){
+        for (Contacto c : listaContactos){
+            fichero.println(c.toString());
+        }
+    }
+
+
+    /**
+     * Método insertarFicheroBinario
+     * Introduce la lista en el fichero binario
+     * @param fichero fichero binario en el que se van a introducir los datos
+     * @throws IOException si hay algún fallo, retorna una excepción
+     */
+    public void insertarFicheroBinario(ObjectOutputStream fichero) throws IOException {
+
+        for (Contacto c : listaContactos){
+            fichero.writeObject(c);
+        }
+    }
+
+    /*
+    public void recogerFicheroBinario(PrintWriter fichero){
+
+    }
+
+    */
 
     /**
      * Método editarContacto
@@ -125,12 +159,10 @@ public class Lista {
 
 
     /**
-     * posicionContacto
-     * Busca el apodo del contacto y si lo encuentra, devuelve la posición de este
+     *
      * @param apodo
-     * @return posicion
+     * @return
      */
-
     public boolean eliminarContacto(String apodo) {
         int posicion = posicionContacto(apodo); // Obtiene la posición del contacto con el apodo que le pasamos
         if (posicion != -1) {
@@ -140,6 +172,12 @@ public class Lista {
         return false; // En caso de no haberlo encontrado
     }
 
+    /**
+     * posicionContacto
+     * Busca el apodo del contacto y si lo encuentra, devuelve la posición de este
+     * @param apodo
+     * @return posicion
+     */
     private int posicionContacto(String apodo) {
         // Recorremos la lista en busca de un apodo que sea igual que el String pasado
         for (int i = 0; i < listaContactos.size(); i++) {
@@ -154,24 +192,7 @@ public class Lista {
     	return listaContactos.size();
     }
 
-    	
-    //me devuelve la i sin pedir apodo
 
-    public Contacto get(int i) {
-        if (i >= 0 && i < listaContactos.size()) {
-            return listaContactos.get(i);
-        } else {
-            throw new IndexOutOfBoundsException("Índice fuera de rango.");
-        }
-    }
     
-    //METODO que devuelve un contacto por el apodo pasado   
-    public Contacto buscaContacto(String apodo) {
-        for (Contacto contacto : listaContactos) {
-            if (contacto.getApodo().equals(apodo)) {
-                return contacto;
-            }
-        }
-        return null;
-    }
+
 }

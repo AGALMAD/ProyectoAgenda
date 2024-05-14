@@ -56,12 +56,8 @@ public class Datos {
         }
 
         //Pide el número
-        do{
-            System.out.println("Número de telefono");
-            int num = sc.nextInt();
-        }while(num.length()!=9);
-        System.out.println("Número válido: " + num);
-        
+        System.out.println("Número de telefono");
+        int num = sc.nextInt();
 
         //Limpia el buffer
         sc.nextLine();
@@ -69,9 +65,6 @@ public class Datos {
         //Pide el mail
         System.out.println("Mail");
         String mail = sc.nextLine();
-        //cierra el sc
-        sc.close();
-        
 
         //Retorna el contacto con todos los datos menos el apodo
         return new Contacto(nombre,apellidos,fnac,num,mail);

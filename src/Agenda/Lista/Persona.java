@@ -16,35 +16,6 @@ public class Persona {
 	}
 
 
-	public String getNombre() {
-		return nombre;
-	}
-
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-
-	public String getApellidos() {
-		return apellidos;
-	}
-
-
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
-	}
-
-
-	public Date getFnac() {
-		return fnac;
-	}
-
-
-	public void setFnac(Date fnac) {
-		this.fnac = fnac;
-	}
-
 
 	@Override
 	public String toString() {

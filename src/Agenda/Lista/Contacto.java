@@ -1,6 +1,7 @@
 package Agenda.Lista;
 
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -15,13 +16,20 @@ import java.util.Scanner;
  ************************
  */
 
-public class Contacto extends Persona {
+public class Contacto extends Persona implements Serializable{ /*Hay que implemetar la interfaz Serializable para poder convertir el objeto a bits para ser almacenado*/
 
+    /**
+     * Atributos
+     * apodo : apodo único que se la va a dar al contacto
+     * telefono : número de telefono con entero
+     * email : mail del contacto como String
+     */
     private String apodo;
     private int telefono;
     private String email;
-    private Scanner sc = new Scanner(System.in);
-  
+
+
+    /*** Constructores ***/
     public Contacto(String nombre, String apellidos, Date fecha, int telefono, String email, String apodo) {
         super(nombre, apellidos, fecha);
         this.telefono = telefono;
@@ -38,14 +46,16 @@ public class Contacto extends Persona {
 
 
 
-    
-
-
-
 	@Override
 	public String toString() {
-		return "Contacto [telefono=" + telefono + ", email=" + email + ", nombre=" + nombre + ", apellidos=" + apellidos
-				+ ", fnac=" + fnac + "]";
+		return "\n----------------------------\n" +
+                apodo +
+                "\n----------------------------" +
+                "\nTelefono " + telefono +
+                "\nEmail " + email + "\n" +
+                super.toString();
+
+
 	}
 
 	public String getEmail() {
