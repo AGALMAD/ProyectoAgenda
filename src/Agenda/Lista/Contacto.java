@@ -18,18 +18,18 @@ import java.util.Scanner;
 public class Contacto extends Persona {
 
     private String apodo;
-    private int telefono;
+    private String telefono;
     private String email;
     private Scanner sc = new Scanner(System.in);
   
-    public Contacto(String nombre, String apellidos, Date fecha, int telefono, String email, String apodo) {
+    public Contacto(String nombre, String apellidos, Date fecha, String telefono, String email, String apodo) {
         super(nombre, apellidos, fecha);
         this.telefono = telefono;
         this.email = email;
         this.apodo = apodo;
     }
 
-    public Contacto(String nombre, String apellidos, Date fecha, int telefono, String email) {
+    public Contacto(String nombre, String apellidos, Date fecha, String telefono, String email) {
         super(nombre, apellidos, fecha);
         this.telefono = telefono;
         this.email = email;
