@@ -56,10 +56,11 @@ public class Datos {
         }
 
         //Pide el número
+        String numero;
         do{
             System.out.println("Número de telefono");
-            int num = sc.nextInt();
-        }while(num.length()!=9);
+            num = sc.next();
+        }while(num.length()!=9 || !serNumero(num));
         System.out.println("Número válido: " + num);
         
 
@@ -75,6 +76,19 @@ public class Datos {
 
         //Retorna el contacto con todos los datos menos el apodo
         return new Contacto(nombre,apellidos,fnac,num,mail);
+    }
+
+    // Comprueba que la cadena solo tenga digitos
+    public static boolean serNumero(String cadena) {
+        if (cadena == null) {
+            return false;
+        }
+        for (char c : cadena.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
