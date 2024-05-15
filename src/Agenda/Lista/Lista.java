@@ -45,9 +45,9 @@ public class Lista {
      * Se le pasa un contacto y se inserta en la lista
      * @param nuevoContacto
      */
-    public void insertarContacto( Contacto nuevoContacto){
+    public boolean insertarContacto( Contacto nuevoContacto){
 
-        listaContactos.add(nuevoContacto);
+        return listaContactos.add(nuevoContacto);
 
     }
 
@@ -61,8 +61,13 @@ public class Lista {
 
         int pos = posicionContacto(apodo);
 
-        listaContactos.set(pos,contactoEditado);
-        return true;
+        try {
+            listaContactos.set(pos,contactoEditado);
+            return true;
+        }
+        catch (Exception e) {
+            throw e;
+        }
 
     }
 
@@ -159,7 +164,8 @@ public class Lista {
 
 
     /**
-     *
+     * Método eliminarContacto
+     * Elimina el contacto de la lista si el apodo existe
      * @param apodo
      * @return
      */
@@ -187,7 +193,12 @@ public class Lista {
         }
         return -1; // Devueve -1 si no se encuentra el apodo en nuestra lista
     }
-    
+
+    /**
+     * Método numeroContactos
+     * Retorna el número de contactos que contiene la lista
+     * @return
+     */
     public int numeroContactos() {
     	return listaContactos.size();
     }

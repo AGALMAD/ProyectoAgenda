@@ -69,8 +69,8 @@ public class Main {
                     nuevoContacto.setApodo(apodo);
                     
                     //Inserta el contacto
-                    listaContactos.insertarContacto(nuevoContacto);
-                    System.out.println("Contacto agregado correctamente");
+                    System.out.println(listaContactos.insertarContacto(nuevoContacto) ? "Contacto agregado correctamente" : "ERROR || no se puede insertar el contacto");
+
                     break;
                 }
                 	//Caso de editar contacto
@@ -85,8 +85,7 @@ public class Main {
                         //Pide los datos restantes en el contacto
                         Contacto contactoEditado = datos.pedirDatos();
                         contactoEditado.setApodo(apodo);
-                        listaContactos.editarContacto(contactoEditado, apodo);
-                        System.out.println("Contacto editado correctamente");
+                        System.out.println(listaContactos.editarContacto(contactoEditado, apodo) ? "Contacto editado correctamente": "ERROR || no se puede editar el contacto");
                         //Mostramos los datos del contacto editado
                         System.out.println(contactoEditado.toString());
                     }
