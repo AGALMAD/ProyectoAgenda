@@ -1,8 +1,6 @@
 package Agenda.Lista;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 import java.util.Date;
@@ -118,32 +116,31 @@ public class Lista {
      */
     public void insertarFicheroBinario(ObjectOutputStream fichero) throws IOException {
 
+        //Inserta la lista en el fichero Binario
         for (Contacto c : listaContactos){
             fichero.writeObject(c);
         }
-    }
-
-    /*
-    public void recogerFicheroBinario(PrintWriter fichero){
 
     }
-
-    */
 
     /**
-     * Método editarContacto
-     * Pide el apodo y pide los nuevos datos de ese contacto
-     * @param apodo
-     * @return 1 si el contacto no existe | 0 si se ha podido editar el contacto
+     * Método recogerFicheroBinario
+     * Se pasa el fichero binario e inserta los datos de este en la lista
+     * @param ficheroBinario
+     * @throws IOException
+     * @throws ClassNotFoundException
      */
-    public int editarContacto( String apodo) {
+    public void recogerFicheroBinario(ObjectInputStream ficheroBinario) throws IOException, ClassNotFoundException, EOFException {
 
-        //Si el contacto no existe, imprime un mensaje por pantalla
-        if (!existeApodo(apodo)){
-            return 1;
+        Contacto nuevoContacto = null;
+        nuevoContacto = (Contacto) ficheroBinario.readObject();
+
+        while (nuevoContacto != null){
+            listaContactos.add(nuevoContacto);
+            nuevoContacto = (Contacto) ficheroBinario.readObject();
+
         }
 
-        return 0;
     }
 
 
@@ -188,7 +185,7 @@ public class Lista {
         // Recorremos la lista en busca de un apodo que sea igual que el String pasado
         for (int i = 0; i < listaContactos.size(); i++) {
             // Si encuentra el apodo, devuelve la posición de este
-            if (listaContactos.get(i).getApodo().equals(apodo))
+            if (listaContactos.get(i).getApodo().equalsIgnoreCase(apodo))
                 return i;
         }
         return -1; // Devueve -1 si no se encuentra el apodo en nuestra lista
@@ -204,6 +201,9 @@ public class Lista {
     }
 
 
+    public boolean listaVacia(){
+        return listaContactos.isEmpty();
+    }
     
 
 }

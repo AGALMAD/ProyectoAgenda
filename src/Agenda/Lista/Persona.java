@@ -1,12 +1,16 @@
 package Agenda.Lista;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Persona {
+public class Persona implements Serializable{
+
 	String nombre;
 	String apellidos;
 	Date fnac;
 
+
+	public Persona(){}
 
 	public Persona(String nombre, String apellidos, Date fnac) {
 

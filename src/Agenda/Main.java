@@ -1,14 +1,17 @@
 package Agenda;
 
+import Agenda.Cifrado.Cesar;
+import Agenda.Cifrado.XOR;
 import Agenda.Lista.Contacto;
 import Agenda.Lista.Datos;
 import Agenda.Lista.Lista;
+import Agenda.Menu.Menu;
 import Agenda.Menu.MenuCifrado;
 import Agenda.Menu.MenuPrincipal;
 import Agenda.Cifrado.Cifrado;
 
 import java.io.*;
-import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Main {
@@ -18,7 +21,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         /*Intancia de los menus para poder utilizarlos en el programa*/
-        MenuPrincipal menuPrincipal = new MenuPrincipal();
+        Menu menuPrincipal = new MenuPrincipal();
         MenuCifrado menuCifrado = new MenuCifrado();
 
         /* Intancia la lista en la que se van a almacenar los contactos*/
@@ -26,35 +29,61 @@ public class Main {
 
         /* Intancia de la clase que pide los datos */
         Datos datos = new Datos();
-        //Opción que sale del bucle
-        final int SALIR = 0;
 
         //Fichero binario en el que se van a insertar los datos
-        String nombreFicheroBinario = "binario.dat";
+        String nombreFicheroBinario = "./binario.dat"; //Si no se especifica la ruta, salta una excepción
 
+        //Fichero binario
+        ObjectInputStream ficheroBinarioLeer = null;
 
+        //Intenta recoger los datos del fichero binario
+        try {
+            ficheroBinarioLeer = new ObjectInputStream(new FileInputStream(nombreFicheroBinario));
+            listaContactos.recogerFicheroBinario(ficheroBinarioLeer);
+
+        }
+        //Si llega al final del fichero o no está creado, ignora la salida
+        catch (EOFException | FileNotFoundException ignored){}
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        finally {
+            if (ficheroBinarioLeer != null)
+                ficheroBinarioLeer.close();
+        }
 
 
         /***
          * Bucle que estará pidiendo opciones hasta que introduzca la opción salir
          */
-        while (menuPrincipal.getOpcion() != SALIR) {
+        //Opción que sale del bucle
+        final int SALIR = 0;
+        while (((MenuPrincipal) menuPrincipal).getOpcion() != SALIR) {
 
             menuPrincipal.mostrarMenu();
-            menuPrincipal.pedirOpcion();
+            //Si introduce otro caracter que no sea un número, no termina el programa
+            try {
+                menuPrincipal.pedirOpcion();
+            }
+            catch (InputMismatchException e){
+                System.err.println("Solo se pueden introducir números");
+            }
 
-            switch (menuPrincipal.getOpcion()){
+            switch (((MenuPrincipal) menuPrincipal).getOpcion()){
                 case 0:
                     System.out.println("---------------------\n  FIN DEL PROGRAMA \n---------------------");
                     break;
                 case 1:
                     menuCifrado.mostrarMenu();
-                    menuCifrado.pedirOpcion();
-                    Cifrado cifrado = new Cifrado(menuCifrado.getTipoCifrado());
-                    System.out.println(cifrado.getTipoCifrado());
+                    //Si introduce otro caracter que no sea un número, no termina el programa
+                    try {
+                        menuCifrado.pedirOpcion();
+                    }
+                    catch (InputMismatchException e){
+                        System.err.println("Solo se pueden introducir números");
+                    }
+                    System.out.println("Cifrado elegido : " + menuCifrado.getTipoCifrado());
                     break;
-                    
-                    // Caso de insertar nuevo contacto
                 case 2: { //Si se ponene {} , es un ámbito diferente y no sale error al crear variables con el mismo nombre
                     //Pide el apodo que se le va a dar al nuevo contacto, si existe, lo vuelve a pedir
                     System.out.println("Apodo que le vas a dar al nuevo contacto");
@@ -73,7 +102,7 @@ public class Main {
 
                     break;
                 }
-                	//Caso de editar contacto
+                //Caso de editar contacto
                 case 3: {
                     //Busca por el apodo el contacto requerido
                     System.out.println("Apodo del contacto a editar: ");
@@ -176,24 +205,36 @@ public class Main {
 
         }
 
-        // Cuando termina el programa, introduce la lista en el fichero binario
-        ObjectOutputStream ficheroBinario = null;
 
-        try {
-            //Abre el fichero en el que se van a introducir los datos
-            ficheroBinario = new ObjectOutputStream(new FileOutputStream(nombreFicheroBinario));
-            listaContactos.insertarFicheroBinario(ficheroBinario);
 
+
+        if (menuCifrado.getTipoCifrado().equalsIgnoreCase("XOR"))
+        {
+            Cifrado cifrado = new XOR();
         }
-        catch (IOException e){
-            System.err.println(e.toString());
-        }
-        finally {
-            if (ficheroBinario != null)
-                ficheroBinario.close();
+        else {
+            Cifrado cifrado = new Cesar();
         }
 
 
+        //Si la lista tiene contenido, la guarda en el fichero binario
+        if (!listaContactos.listaVacia()) {
+            // Cuando termina el programa, introduce la lista en el fichero binario
+            ObjectOutputStream ficheroBinarioEscribir = null;
+
+            try {
+                //Abre el fichero en el que se van a introducir los datos
+                ficheroBinarioEscribir = new ObjectOutputStream(new FileOutputStream(nombreFicheroBinario));
+                listaContactos.insertarFicheroBinario(ficheroBinarioEscribir);
+
+            } catch (IOException e) {
+                System.err.println(e.toString());
+            } finally {
+                if (ficheroBinarioEscribir != null)
+                    ficheroBinarioEscribir.close();
+            }
+
+        }
 
     }
 }

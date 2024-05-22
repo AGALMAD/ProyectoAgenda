@@ -15,7 +15,7 @@ import java.util.Arrays;
 public abstract class Menu {
 
 
-    /**Metodos abstractos que tienen que implementar los menus hijos **/
+    /*Metodos abstractos que tienen que implementar los menus hijos */
 
     /**mostrarMenu : Muestra las opciones por pantalla del menú **/
     public abstract void mostrarMenu();

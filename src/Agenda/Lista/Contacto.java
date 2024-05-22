@@ -18,6 +18,11 @@ import java.util.Scanner;
 
 public class Contacto extends Persona implements Serializable{ /*Hay que implemetar la interfaz Serializable para poder convertir el objeto a bits para ser almacenado*/
 
+
+
+    private static final long serialVersionUID = 6529685098267757690L;
+
+
     /**
      * Atributos
      * apodo : apodo único que se la va a dar al contacto
@@ -28,7 +33,13 @@ public class Contacto extends Persona implements Serializable{ /*Hay que impleme
     private int telefono;
     private String email;
 
+
     /*** Constructores ***/
+
+    public Contacto(){
+        super();
+    }
+
     public Contacto(String nombre, String apellidos, Date fecha, int telefono, String email, String apodo) {
         super(nombre, apellidos, fecha);
         this.telefono = telefono;

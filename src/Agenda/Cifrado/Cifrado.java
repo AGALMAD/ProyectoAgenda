@@ -11,25 +11,11 @@ package Agenda.Cifrado;
  ************************
  * */
 
-public class Cifrado {
+public abstract class Cifrado {
 
-    /** Atributo tipoCifrado : Almacena el tipo de cifrado que se va a utilizar**/
-    private Tipo tipoCifrado;
-
-    private enum Tipo{XOR, CESAR};
-
-    /**
-     * Construtor para el cifrado, se le pasa el tipo de cifrado como un String y se pasa a Tipo
-     * @param cifrado : String con el tipo de cifrado
-     */
-    public Cifrado(String cifrado){
-
-        tipoCifrado = Tipo.valueOf(cifrado);
-
-    }
+    public abstract void cifrar();
+    public abstract void descifrar();
 
 
-    public Tipo getTipoCifrado() {
-        return tipoCifrado;
-    }
+
 }
