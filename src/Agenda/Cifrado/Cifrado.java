@@ -13,8 +13,8 @@ package Agenda.Cifrado;
 
 public abstract class Cifrado {
 
-    public abstract void cifrar();
-    public abstract void descifrar();
+    public abstract String cifrar(String texto, int clave);
+    public abstract String descifrar(String texto, int clave);
 
 
 
