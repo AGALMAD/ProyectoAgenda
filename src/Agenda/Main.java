@@ -9,6 +9,7 @@ import Agenda.Menu.Menu;
 import Agenda.Menu.MenuCifrado;
 import Agenda.Menu.MenuPrincipal;
 import Agenda.Cifrado.Cifrado;
+import Agenda.Cifrado.ConfiguracionCifrado;
 
 import java.io.*;
 import java.util.InputMismatchException;
@@ -19,7 +20,9 @@ public class Main {
 
         //Scanner para recoger los datos del usuario
         Scanner sc = new Scanner(System.in);
-
+        
+        /*Constante de clave en cifrado*/
+       
         /*Intancia de los menus para poder utilizarlos en el programa*/
         Menu menuPrincipal = new MenuPrincipal();
         MenuCifrado menuCifrado = new MenuCifrado();
@@ -83,6 +86,38 @@ public class Main {
                         System.err.println("Solo se pueden introducir números");
                     }
                     System.out.println("Cifrado elegido : " + menuCifrado.getTipoCifrado());
+                    
+                    if (menuCifrado.getTipoCifrado() == "CESAR") {
+                    	Cifrado cifrado = new Cesar();
+                    	int clave = 3;
+                    	ConfiguracionCifrado conf = new ConfiguracionCifrado(cifrado,clave);
+                    	String archivo = "C:\\Users\\hiimy\\Desktop\\ProyectoAgenda-master\\binario.dat";
+                    	try {
+                            // Cifrar el archivo
+                            conf.cifrarArchivo(archivo);
+
+                            // Descifrar el archivo
+                            conf.descifrarArchivo(archivo);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }else {
+                    	Cifrado cifrado = new XOR();
+                    	int clave = 3;
+                    	ConfiguracionCifrado conf = new ConfiguracionCifrado(cifrado,clave);
+                    	String archivo = "C:\\Users\\hiimy\\Desktop\\ProyectoAgenda-master\\binario.dat";
+                    	try {
+                            // Cifrar el archivo
+                            conf.cifrarArchivo(archivo);
+
+                            // Descifrar el archivo
+                            conf.descifrarArchivo(archivo);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    	
+                    }
+                    
                     break;
                 case 2: { //Si se ponene {} , es un ámbito diferente y no sale error al crear variables con el mismo nombre
                     //Pide el apodo que se le va a dar al nuevo contacto, si existe, lo vuelve a pedir
