@@ -38,7 +38,8 @@ public class Main {
         ObjectInputStream ficheroBinarioLeer = null;
 
         //Cifrado que va a terner por defecto es el cifrado XOR
-        Cifrado cifrado = new XOR();
+        int clave = 3;
+        Cifrado cifrado = new XOR(clave);
 
 
         //Intenta recoger los datos del fichero binario, si no existe, sigue con el programa
@@ -212,12 +213,12 @@ public class Main {
 
         }
 
+
         //Crea el cifrado elegido
         if (menuCifrado.getTipoCifrado().equalsIgnoreCase("CESAR")) {
-            char clave = 'A';
             cifrado = new Cesar(clave);
         }else {
-            cifrado = new XOR();
+            cifrado = new XOR(clave);
         }
 
         //Si la lista tiene contenido, la guarda en el fichero binario

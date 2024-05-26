@@ -10,12 +10,10 @@ import java.util.ArrayList;
 // La clase Cesar extiende de la clase abstracta Cifrado.
 public class Cesar extends Cifrado {
 
-    // Define un atributo de tipo Character para la clave (aunque no se usa en esta clase).
-    private char clave;
 
     // Constructor vacío para la clase Cesar.
-    public Cesar(char clave) {
-        this.clave = clave;
+    public Cesar(int clave) {
+        super(clave);
     }
 
     // Implementación del método cifrar de la clase base.

@@ -16,7 +16,11 @@ import java.io.ObjectOutputStream;
 
 public abstract class Cifrado {
 
+    protected int clave;
 
+    public Cifrado(int clave){
+        this.clave = clave;
+    }
 
     public void descifrar(ObjectInputStream fichero){
 

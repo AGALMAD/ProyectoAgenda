@@ -15,7 +15,9 @@ import static java.awt.SystemColor.text;
 public class XOR extends Cifrado {
 
     // Constructor vacío para la clase XOR.
-    public XOR() {}
+    public XOR(int clave) {
+        super(clave);
+    }
 
     // Implementación del método cifrar de la clase base.
 
