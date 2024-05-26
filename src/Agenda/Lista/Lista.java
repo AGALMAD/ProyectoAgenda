@@ -1,5 +1,7 @@
 package Agenda.Lista;
 
+import Agenda.Cifrado.Cifrado;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -8,12 +10,12 @@ import java.util.Scanner;
 
 /**
  ************************
- * Clase : Agenda.Lista
- * Autor : Alejandro Gálvez Madueño
+ * Clase : Lista
+ * Autor : Alejandro Gálvez Madueño y Yon Cortes Bernal
  * Fecha : 05/2024
- * Version : 0.0
- * Testeo : No
- * Descripción : Clase de cifrado
+ * Version : 1.0
+ * Testeo :
+ * Descripción : Clase de Lista, permite manejar toda la lista de los contactos
  ************************
  * */
 
@@ -49,7 +51,13 @@ public class Lista {
 
     }
 
-
+    /**
+     * Método editarContacto
+     * inserta el contacto editado en su posición
+     * @param contactoEditado
+     * @param apodo
+     * @return false si no existe el apodo | true si se ha insertado correctamente
+     */
     public boolean editarContacto(Contacto contactoEditado, String apodo){
 
         //Si el apodo no existe, no sigue con el programa
@@ -59,13 +67,8 @@ public class Lista {
 
         int pos = posicionContacto(apodo);
 
-        try {
-            listaContactos.set(pos,contactoEditado);
-            return true;
-        }
-        catch (Exception e) {
-            throw e;
-        }
+        listaContactos.set(pos,contactoEditado);
+        return true;
 
     }
 
@@ -108,6 +111,9 @@ public class Lista {
     }
 
 
+    /********** Pasar a ficheros binarios sin cifrar (versión anterior)*************/
+
+
     /**
      * Método insertarFicheroBinario
      * Introduce la lista en el fichero binario
@@ -142,6 +148,8 @@ public class Lista {
         }
 
     }
+
+
 
 
     /**
@@ -200,10 +208,116 @@ public class Lista {
     	return listaContactos.size();
     }
 
-
+    /**
+     * Método para saber si la lista está vacia
+     * @return
+     */
     public boolean listaVacia(){
         return listaContactos.isEmpty();
     }
-    
+
+
+
+
+    /************************** Cifrado **************************/
+
+
+    /**
+     * Método pasarListaByte
+     * Pasa la lista a array de bytes
+     * @param listaContactos
+     * @return la lista pasada a array de bytes
+     */
+    public byte[] pasarListaByte(ArrayList<Contacto> listaContactos) throws IOException {
+        //Array que va almacenar la lista en forma de bytes
+        byte [] arrayBytes = null;
+        //Pasa la lista a bytes
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ObjectOutputStream objOstream = new ObjectOutputStream(baos);
+        objOstream.writeObject(listaContactos);
+        objOstream.flush();
+        arrayBytes = baos.toByteArray();
+
+        return arrayBytes;
+    }
+
+    /**
+     * Método pasarByteLista
+     * Los bytes ya descifrados los pasa a la lista
+     * @param listaByte
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public void pasarByteLista(byte[] listaByte) throws IOException, ClassNotFoundException {
+        // Convierte el arreglo de bytes de nuevo a una lista de Contactos
+        ByteArrayInputStream bais = new ByteArrayInputStream(listaByte);
+        ObjectInputStream objIstream = new ObjectInputStream(bais);
+        listaContactos = (ArrayList<Contacto>) objIstream.readObject();
+
+    }
+
+    /**
+     * Método cifrar
+     * Cifra la lista con el método indicado y la pasa al fichero binario
+     * @param tipo
+     * @param ficheroCifrar
+     * @throws IOException
+     */
+    public void cifrar(String tipo, ObjectOutputStream ficheroCifrar) throws IOException{
+
+        Cifrado cifrado = new Cifrado();
+        //Introduce en el fichero el tipo de cifrado implementado y el array de bytes cifrado como un solo objeto
+        switch (tipo){
+            case "XOR" :{
+                //Introduce un número entero en el fichero para posteriormente saber el tipo de cifrado que se ha realizado
+                ficheroCifrar.writeInt(1);
+                //Pasa al fichero binario, la lista pasada a bytes y cifrada con XOR
+                ficheroCifrar.writeObject(cifrado.cifradoXor(pasarListaByte(listaContactos)));
+                break;
+            }
+            case "CESAR":{
+                ficheroCifrar.writeInt(2);
+                //Pasa al fichero binario, la lista pasada a bytes y cifrada con Cesar
+                ficheroCifrar.writeObject(cifrado.cifradoCesar(pasarListaByte(listaContactos)));
+                break;
+            }
+
+        }
+    }
+
+
+    /**
+     * Método descifrarFichero
+     * El primer byte del fichero recoge el tipo de cifrado que se ha realizado en el fichero, lo descifra con el método correspondiente
+     * @param ficheroCifrado
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
+    public void descifrarFichero(ObjectInputStream ficheroCifrado) throws IOException, ClassNotFoundException {
+
+        Cifrado cifrado = new Cifrado();
+
+        int tipo = ficheroCifrado.readInt(); //recoge el tipo de cifrado que se ha implementado
+        byte[] listaByte;
+        //recoge los datos del fichero binario
+        listaByte = (byte[]) ficheroCifrado.readObject();
+
+        //Descifra el array de bytes
+        switch (tipo){
+            case 1:{
+                cifrado.cifradoXor(listaByte);
+                break;
+            }
+            case 2:{
+                cifrado.descifradoCesar(listaByte);
+                break;
+            }
+        }
+
+        //pasa el array de bytes a la lista
+        pasarByteLista(listaByte);
+
+    }
+
 
 }

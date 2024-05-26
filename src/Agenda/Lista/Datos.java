@@ -4,6 +4,16 @@ import java.time.LocalDate;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+/**
+ ************************
+ * Clase : Datos
+ * Autor : Alejandro Gálvez Madueño
+ * Fecha : 05/2024
+ * Version : 1.0
+ * Testeo : No
+ * Descripción : Clase que permite pedir los datos al usuario
+ ************************
+ * */
 public class Datos {
 
     Scanner sc = new Scanner(System.in);
@@ -12,7 +22,7 @@ public class Datos {
      * Método : pedirDatos
      * Pide todos los datos del contacto menos el apodo al usuario y retorna el contacto,
      * se crea para poder utilizarlo en insertar un nuevo contacto y en modificar contacto
-     * @return
+     * @return Contacto sin el apodo
      */
     public Contacto pedirDatos(){
 

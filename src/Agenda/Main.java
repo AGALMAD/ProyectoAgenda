@@ -1,7 +1,5 @@
 package Agenda;
 
-import Agenda.Cifrado.Cesar;
-import Agenda.Cifrado.XOR;
 import Agenda.Lista.Contacto;
 import Agenda.Lista.Datos;
 import Agenda.Lista.Lista;
@@ -38,19 +36,21 @@ public class Main {
         ObjectInputStream ficheroBinarioLeer = null;
 
         //Cifrado que va a terner por defecto es el cifrado XOR
-        int clave = 3;
-        Cifrado cifrado = new XOR(clave);
+        Cifrado cifrado = new Cifrado();
 
 
         //Intenta recoger los datos del fichero binario, si no existe, sigue con el programa
         try {
             ficheroBinarioLeer = new ObjectInputStream(new FileInputStream(nombreFicheroBinario));
-            listaContactos.recogerFicheroBinario(ficheroBinarioLeer);
+            listaContactos.descifrarFichero(ficheroBinarioLeer);
 
         }
         //Si llega al final del fichero o no está creado, ignora la salida
         catch (EOFException | FileNotFoundException ignored){}
-        catch (Exception e){
+        catch (IOException e){
+            System.err.println("Error al recoger los datos del fichero");
+        }
+        catch (ClassNotFoundException e){
             System.err.println(e.toString());
         }
         finally {
@@ -214,12 +214,6 @@ public class Main {
         }
 
 
-        //Crea el cifrado elegido
-        if (menuCifrado.getTipoCifrado().equalsIgnoreCase("CESAR")) {
-            cifrado = new Cesar(clave);
-        }else {
-            cifrado = new XOR(clave);
-        }
 
         //Si la lista tiene contenido, la guarda en el fichero binario
         if (!listaContactos.listaVacia()) {
@@ -229,7 +223,8 @@ public class Main {
             try {
                 //Abre el fichero en el que se van a introducir los datos
                 ficheroBinarioEscribir = new ObjectOutputStream(new FileOutputStream(nombreFicheroBinario));
-                listaContactos.insertarFicheroBinario(ficheroBinarioEscribir);
+                listaContactos.cifrar(menuCifrado.getTipoCifrado(),ficheroBinarioEscribir);
+
 
             } catch (IOException e) {
                 System.err.println(e.toString());

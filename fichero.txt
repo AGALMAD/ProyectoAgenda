@@ -1,9 +1,18 @@
 
 ----------------------------
-ghyujkil
+Agalmad
 ----------------------------
-Telefono 2
-Email 2
+Telefono 123456789
+Email ghjukl
 
-Nombre y apellidos : 2ghjkl hgjki
-Fecha de Nacimiento : 0/2/2
+Nombre y apellidos : Alejandro Galvez
+Fecha de Nacimiento : 0200-02-02
+
+----------------------------
+Yon
+----------------------------
+Telefono 5678
+Email ghjkilo
+
+Nombre y apellidos : Yon ghjk
+Fecha de Nacimiento : 0002-02-02

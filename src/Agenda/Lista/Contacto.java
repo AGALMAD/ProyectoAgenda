@@ -8,20 +8,16 @@ import java.util.Scanner;
 
 /**
  ************************
- * Clase : Agenda.Lista.Contacto
+ * Clase : Contacto
  * Autor : Yon Cortes Bernal
  * Fecha : 05/2024
- * Version : 0.0
+ * Version : 1.0
  * Testeo : No
- * Descripción : Clase Contacto
+ * Descripción : crea contactos para poder manejarlos en la lista
  ************************
  */
 
 public class Contacto extends Persona implements Serializable{ /*Hay que implemetar la interfaz Serializable para poder convertir el objeto a bits para ser almacenado*/
-
-
-
-    private static final long serialVersionUID = 6529685098267757690L;
 
 
     /**
@@ -67,14 +63,6 @@ public class Contacto extends Persona implements Serializable{ /*Hay que impleme
                 super.toString();
 
 
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
     public String getApodo() {

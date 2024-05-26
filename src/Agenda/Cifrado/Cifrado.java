@@ -1,33 +1,70 @@
 package Agenda.Cifrado;
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 
 /**
  ************************
- * Clase : Agenda.Cifrado
+ * Clase : Cifrado
  * Autor : Alejandro Gálvez Madueño
  * Fecha : 05/2024
- * Version : 0.0
+ * Version : 1.0
  * Testeo : No
  * Descripción : Clase de cifrado
  ************************
  * */
 
-public abstract class Cifrado {
+public class Cifrado {
+    //Claves para los cifrados
+    private final int claveCesar = 3;
+    private final int claveXOR = 111;
 
-    protected int clave;
+    /**
+     * Constructor por defecto
+     */
+    public Cifrado(){}
 
-    public Cifrado(int clave){
-        this.clave = clave;
+
+    /**
+     * Método cifradoXor
+     * realiza una operación XOR sobre el array de bytes de la lista
+     * @param arrayBytes
+     * @return arrayBytes
+     */
+    public byte[] cifradoXor(byte[] arrayBytes){
+
+        for (int i = 0; i < arrayBytes.length; i++) {
+            arrayBytes[i] = (byte) (arrayBytes[i] ^ claveXOR);
+        }
+
+        return arrayBytes;
     }
 
-    public void descifrar(ObjectInputStream fichero){
+    /**
+     * Método cifradoCesar
+     * realiza un cifrado cesar al array de bytes
+     * @param arrayBytes
+     * @return arrayBytes cifrado
+     */
+    public byte[] cifradoCesar(byte[] arrayBytes){
 
+        for (int i = 0; i < arrayBytes.length; i++) {
+            arrayBytes[i] = (byte) (arrayBytes[i] + claveCesar);
+        }
 
-
+        return arrayBytes;
     }
 
+    /**
+     * Método descifradoCesar
+     * Descifra el array de bytes que ya ha sido cifreado con cesar
+     * @param arrayBytes
+     */
+    public void descifradoCesar(byte[] arrayBytes){
+
+        for (int i = 0; i < arrayBytes.length; i++) {
+            arrayBytes[i] = (byte) (arrayBytes[i] - claveCesar);
+        }
+
+    }
 
 
 }

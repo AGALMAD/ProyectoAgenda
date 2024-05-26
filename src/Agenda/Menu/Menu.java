@@ -7,7 +7,7 @@ import java.util.Arrays;
  * Clase : Menu
  * Autor : Alejandro Gálvez Madueño
  * Fecha : 04/2024
- * Version : 0.0
+ * Version : 1.0
  * Testeo : No
  * Descripción : Clase abstracta que obliga a los hijos a implementar los métodos para mostrar el menú y pedir una opción
  ************************

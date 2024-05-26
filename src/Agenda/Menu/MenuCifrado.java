@@ -9,9 +9,9 @@ import java.util.Scanner;
  * Clase : Menu Agenda.Cifrado
  * Autor : Alejandro Gálvez Madueño
  * Fecha : 05/2024
- * Version : 0.0
+ * Version : 1.0
  * Testeo : No
- * Descripción : Clase que muestra el menú de los tipos de Agenda.Cifrado y pide la opción que introduce el usuario
+ * Descripción : Clase que muestra el menú de los tipos de Cifrado y pide la opción que introduce el usuario
  ************************
  * */
 public class MenuCifrado extends Menu {
