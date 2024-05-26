@@ -166,7 +166,20 @@ public class Lista {
 
         return false;
     }
-
+    /*
+    
+    /**
+     * consultarContacto
+     * Con este metodo el JUNIT no da fallos 
+     * @param apodo
+     */
+    public Contacto consultarContacto(String apodo) {
+        int pos = posicionContacto(apodo);
+        if (pos != -1) {
+            return listaContactos.get(pos);
+        }
+        return null;
+    }*/
 
     /**
      * Método eliminarContacto
