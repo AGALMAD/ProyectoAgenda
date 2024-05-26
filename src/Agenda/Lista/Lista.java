@@ -4,9 +4,6 @@ import Agenda.Cifrado.Cifrado;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
-import java.util.Date;
-import java.util.Scanner;
 
 /**
  ************************
@@ -155,31 +152,17 @@ public class Lista {
     /**
      * consultarContacto
      * Si existe el contacto, lo imprime por pantalla, si no, imprime que ese contacto no existe
-     * @param apodo
-     */
-    public boolean consultarContacto(String apodo) {
-
-        if (existeApodo(apodo)) {
-            System.out.println(listaContactos.get(posicionContacto(apodo)).toString());
-            return true;
-        }
-
-        return false;
-    }
-    /*
-    
-    /**
-     * consultarContacto
-     * Con este metodo el JUNIT no da fallos 
+     *
      * @param apodo
      */
     public Contacto consultarContacto(String apodo) {
-        int pos = posicionContacto(apodo);
-        if (pos != -1) {
-            return listaContactos.get(pos);
+
+        if (existeApodo(apodo)) {
+            return listaContactos.get(posicionContacto(apodo));
         }
+
         return null;
-    }*/
+    }
 
     /**
      * Método eliminarContacto

@@ -10,20 +10,22 @@
  ************************
  */
 
-package Pruebas;
+package Agenda.Pruebas;
 
 /*Lista de librerias importadas necesarias*/
-import static org.junit.jupiter.api.Assertions.*;
+
 
 import java.io.*;
 import java.time.LocalDate;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 
 import Agenda.Lista.Contacto;
 import Agenda.Lista.Lista;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
+import static org.junit.Assert.*;
 
 
 class ListaTest {
@@ -41,7 +43,7 @@ class ListaTest {
     @Test
     void testInsertarContacto() {
         Contacto c = new Contacto();
-        assertTrue(lista.insertarContacto(c));
+        Assertions.assertTrue(lista.insertarContacto(c));
     }
 
     
@@ -54,7 +56,7 @@ class ListaTest {
         c.setApodo(apodo);
         lista.insertarContacto(c);
 
-        assertTrue(lista.existeApodo(apodo));
+        Assertions.assertTrue(lista.existeApodo(apodo));
     }
     
     /*
@@ -84,7 +86,7 @@ class ListaTest {
 
         // Verificamos si el contenido es correcto
         String resultado = contacto1.toString() + contacto2.toString() ;
-        assertEquals(resultado, contenedor.toString());
+        Assertions.assertEquals(resultado, contenedor.toString());
     }
 
 
@@ -100,8 +102,8 @@ class ListaTest {
         lista.insertarContacto(c);
 
         Contacto consultado = lista.consultarContacto("Juanito");
-        assertNotNull(consultado);
-        assertEquals("Juanito", consultado.getApodo());
+        Assertions.assertNotNull(consultado);
+        Assertions.assertEquals("Juanito", consultado.getApodo());
     }
 
     /*
@@ -115,7 +117,7 @@ class ListaTest {
         c.setApodo(apodo);
         lista.insertarContacto(c);
 
-        assertTrue(lista.eliminarContacto(apodo));
-        assertFalse(lista.existeApodo(apodo));
+        Assertions.assertTrue(lista.eliminarContacto(apodo));
+        Assertions.assertFalse(lista.existeApodo(apodo));
     }
 }

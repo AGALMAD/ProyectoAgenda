@@ -138,7 +138,7 @@ public class Main {
                     String apodo = sc.nextLine();
 
                     if (listaContactos.existeApodo(apodo))
-                        listaContactos.consultarContacto(apodo);
+                        System.out.println(listaContactos.consultarContacto(apodo).toString());
                     else
                         System.err.println("El contacto no existe");
                     break;
