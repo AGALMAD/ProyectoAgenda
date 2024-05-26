@@ -2,6 +2,7 @@ package Agenda.Lista;
 
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -40,14 +41,14 @@ public class Contacto extends Persona implements Serializable{ /*Hay que impleme
         super();
     }
 
-    public Contacto(String nombre, String apellidos, Date fecha, int telefono, String email, String apodo) {
+    public Contacto(String nombre, String apellidos, LocalDate fecha, int telefono, String email, String apodo) {
         super(nombre, apellidos, fecha);
         this.telefono = telefono;
         this.email = email;
         this.apodo = apodo;
     }
 
-    public Contacto(String nombre, String apellidos, Date fecha, int telefono, String email) {
+    public Contacto(String nombre, String apellidos, LocalDate fecha, int telefono, String email) {
         super(nombre, apellidos, fecha);
         this.telefono = telefono;
         this.email = email;

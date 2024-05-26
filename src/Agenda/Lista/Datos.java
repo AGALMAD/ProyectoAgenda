@@ -1,6 +1,7 @@
 package Agenda.Lista;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Datos {
@@ -27,7 +28,8 @@ public class Datos {
         System.out.println("Inserta la fecha de nacimiento");
 
         int anio = 2000 ,dia = 1,mes = 1;
-        Date fnac;
+        int num = 123456789;
+        LocalDate fnac;
 
         try {
             System.out.println("\tAño");
@@ -44,20 +46,26 @@ public class Datos {
             if (anio < 0)
                 throw new ArithmeticException("ERROR | año incorrecto");
 
-            fnac = new Date(anio, mes, dia);
+            fnac = LocalDate.of(anio,mes,dia);
 
         }
-        catch (Exception e){
+        catch (InputMismatchException e){
 
             // Si ha ocurrido algún fallo en la inserción de la fecha, introduce una fecha por defecto
-            System.out.println(e.toString());
-            fnac = new Date(2000,1,1);
+            System.err.println("Solo puedes introducir números");
+            fnac = LocalDate.of(2000,1,1);
+            sc.next();
 
         }
 
-        //Pide el número
-        System.out.println("Número de telefono");
-        int num = sc.nextInt();
+        try {
+            //Pide el número
+            System.out.println("Número de telefono");
+            num = sc.nextInt();
+        }
+        catch (InputMismatchException e){
+            System.err.println("Solo puedes introducir un número");
+        }
 
 
         //Limpia el buffer
@@ -71,18 +79,6 @@ public class Datos {
         return new Contacto(nombre,apellidos,fnac,num,mail);
     }
 
-    // Comprueba que la cadena solo tenga digitos
-    public static boolean serNumero(String cadena) {
-        if (cadena == null) {
-            return false;
-        }
-        for (char c : cadena.toCharArray()) {
-            if (!Character.isDigit(c)) {
-                return false;
-            }
-        }
-        return true;
-    }
 
 
 }

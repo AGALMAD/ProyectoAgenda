@@ -5,11 +5,9 @@ import Agenda.Cifrado.XOR;
 import Agenda.Lista.Contacto;
 import Agenda.Lista.Datos;
 import Agenda.Lista.Lista;
-import Agenda.Menu.Menu;
 import Agenda.Menu.MenuCifrado;
 import Agenda.Menu.MenuPrincipal;
 import Agenda.Cifrado.Cifrado;
-import Agenda.Cifrado.ConfiguracionCifrado;
 
 import java.io.*;
 import java.util.InputMismatchException;
@@ -24,7 +22,7 @@ public class Main {
         /*Constante de clave en cifrado*/
        
         /*Intancia de los menus para poder utilizarlos en el programa*/
-        Menu menuPrincipal = new MenuPrincipal();
+        MenuPrincipal menuPrincipal = new MenuPrincipal();
         MenuCifrado menuCifrado = new MenuCifrado();
 
         /* Intancia la lista en la que se van a almacenar los contactos*/
@@ -39,7 +37,11 @@ public class Main {
         //Fichero binario
         ObjectInputStream ficheroBinarioLeer = null;
 
-        //Intenta recoger los datos del fichero binario
+        //Cifrado que va a terner por defecto es el cifrado XOR
+        Cifrado cifrado = new XOR();
+
+
+        //Intenta recoger los datos del fichero binario, si no existe, sigue con el programa
         try {
             ficheroBinarioLeer = new ObjectInputStream(new FileInputStream(nombreFicheroBinario));
             listaContactos.recogerFicheroBinario(ficheroBinarioLeer);
@@ -48,7 +50,7 @@ public class Main {
         //Si llega al final del fichero o no está creado, ignora la salida
         catch (EOFException | FileNotFoundException ignored){}
         catch (Exception e){
-            e.printStackTrace();
+            System.err.println(e.toString());
         }
         finally {
             if (ficheroBinarioLeer != null)
@@ -61,7 +63,7 @@ public class Main {
          */
         //Opción que sale del bucle
         final int SALIR = 0;
-        while (((MenuPrincipal) menuPrincipal).getOpcion() != SALIR) {
+        while (menuPrincipal.getOpcion() != SALIR) {
 
             menuPrincipal.mostrarMenu();
             //Si introduce otro caracter que no sea un número, no termina el programa
@@ -72,7 +74,7 @@ public class Main {
                 System.err.println("Solo se pueden introducir números");
             }
 
-            switch (((MenuPrincipal) menuPrincipal).getOpcion()){
+            switch (menuPrincipal.getOpcion()){
                 case 0:
                     System.out.println("---------------------\n  FIN DEL PROGRAMA \n---------------------");
                     break;
@@ -86,37 +88,7 @@ public class Main {
                         System.err.println("Solo se pueden introducir números");
                     }
                     System.out.println("Cifrado elegido : " + menuCifrado.getTipoCifrado());
-                    
-                    if (menuCifrado.getTipoCifrado() == "CESAR") {
-                    	Cifrado cifrado = new Cesar();
-                    	int clave = 3;
-                    	ConfiguracionCifrado conf = new ConfiguracionCifrado(cifrado,clave);
-                    	String archivo = "C:\\Users\\hiimy\\Desktop\\ProyectoAgenda-master\\binario.dat";
-                    	try {
-                            // Cifrar el archivo
-                            conf.cifrarArchivo(archivo);
 
-                            // Descifrar el archivo
-                            conf.descifrarArchivo(archivo);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }else {
-                    	Cifrado cifrado = new XOR();
-                    	int clave = 3;
-                    	ConfiguracionCifrado conf = new ConfiguracionCifrado(cifrado,clave);
-                    	String archivo = "C:\\Users\\hiimy\\Desktop\\ProyectoAgenda-master\\binario.dat";
-                    	try {
-                            // Cifrar el archivo
-                            conf.cifrarArchivo(archivo);
-
-                            // Descifrar el archivo
-                            conf.descifrarArchivo(archivo);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    	
-                    }
                     
                     break;
                 case 2: { //Si se ponene {} , es un ámbito diferente y no sale error al crear variables con el mismo nombre
@@ -240,17 +212,13 @@ public class Main {
 
         }
 
-
-
-
-        if (menuCifrado.getTipoCifrado().equalsIgnoreCase("XOR"))
-        {
-            Cifrado cifrado = new XOR();
+        //Crea el cifrado elegido
+        if (menuCifrado.getTipoCifrado().equalsIgnoreCase("CESAR")) {
+            char clave = 'A';
+            cifrado = new Cesar(clave);
+        }else {
+            cifrado = new XOR();
         }
-        else {
-            Cifrado cifrado = new Cesar();
-        }
-
 
         //Si la lista tiene contenido, la guarda en el fichero binario
         if (!listaContactos.listaVacia()) {

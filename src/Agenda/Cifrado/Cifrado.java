@@ -1,5 +1,8 @@
 package Agenda.Cifrado;
 
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+
 /**
  ************************
  * Clase : Agenda.Cifrado
@@ -13,8 +16,13 @@ package Agenda.Cifrado;
 
 public abstract class Cifrado {
 
-    public abstract String cifrar(String texto, int clave);
-    public abstract String descifrar(String texto, int clave);
+
+
+    public void descifrar(ObjectInputStream fichero){
+
+
+
+    }
 
 
 
